@@ -46,6 +46,11 @@ public class GamePanel extends JPanel implements Runnable{
     BufferedImage pillar;
     BufferedImage background;
 
+    AudioHandler audioHandler = new AudioHandler();
+    
+    
+    
+
 
 
     Thread gameThread;
@@ -53,6 +58,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public boolean collision(int py, int ps, int oy, int os){
         if(py<=oy+os&&py+ps>=oy){
+            return true;
+        }
+        else if(playerY>screenHeight){
             return true;
         }
         else{
@@ -99,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run(){
 
+        audioHandler.loadSound("birb.wav");
         coords.add(screenWidth);
         int rand = (int) (Math.random()*193);
         size.add(rand);
@@ -214,6 +223,8 @@ public class GamePanel extends JPanel implements Runnable{
         playerY += fallSpeed;
         if (keyH.upPressed && canPress){
             playerY-=jump;
+            audioHandler.playSound();
+            audioHandler.stopSound();
             canPress = false;
         }
         
